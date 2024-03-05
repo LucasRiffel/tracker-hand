@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
 import time
+import math
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -35,8 +36,37 @@ with mp_hands.Hands(
                     cap.release()
                     exit()
 
+                def calculate_distance(point1, point2):
+                    return math.sqrt((point1.x - point2.x) ** 2 + (point1.y - point2.y) ** 2)
+
+                thumb_tip = hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_TIP]
+                index_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP]
+                middle_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP]
+                ring_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP]
+                pinky_tip = hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP]
+
+                thumb_index_distance = calculate_distance(thumb_tip, index_finger_tip)
+                index_middle_distance = calculate_distance(index_finger_tip, middle_finger_tip)
+
+                DISTANCE_THRESHOLD = 0.1
+
+                if (thumb_tip.y < ring_finger_tip.y and thumb_tip.y < pinky_tip.y and
+                    index_finger_tip.y < ring_finger_tip.y and index_finger_tip.y < pinky_tip.y and
+                    middle_finger_tip.y < ring_finger_tip.y and middle_finger_tip.y < pinky_tip.y):
+            
+                   if (thumb_tip.y < ring_finger_tip.y and thumb_tip.y < pinky_tip.y and
+                        index_finger_tip.y < ring_finger_tip.y and index_finger_tip.y < pinky_tip.y and
+                        middle_finger_tip.y < ring_finger_tip.y and middle_finger_tip.y < pinky_tip.y and
+                        thumb_index_distance > DISTANCE_THRESHOLD and index_middle_distance > DISTANCE_THRESHOLD):
+                        print("Gesto detectado: Súarez")
+                        time.sleep(1) 
+                        cv2.destroyAllWindows()
+                        cap.release()
+                        exit()
+
+
         cv2.imshow('MediaPipe Hands', image)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-cap.release()        
+cap.release()
