@@ -28,7 +28,7 @@ with mp_hands.Hands(
                 thumb_x, thumb_y = int(thumb_tip.x * image.shape[1]), int(thumb_tip.y * image.shape[0])
                 index_x, index_y = int(index_finger_tip.x * image.shape[1]), int(index_finger_tip.y * image.shape[0])
 
-                if thumb_x - 10 < index_x < thumb_x + 10 and thumb_y - 10 < index_y < thumb_y + 10:
+                if thumb_x - 10 < index_x < thumb_x + 10 and thumb_y - 10 < index_y < thumb_y + 0:
                     print("Gesto detectado: Fechar a mão e pressionar o dedo indicador no polegar")
                     time.sleep(1) 
                     cv2.destroyAllWindows()
