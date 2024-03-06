@@ -59,10 +59,7 @@ with mp_hands.Hands(
                         middle_finger_tip.y < ring_finger_tip.y and middle_finger_tip.y < pinky_tip.y and
                         thumb_index_distance > DISTANCE_THRESHOLD and index_middle_distance > DISTANCE_THRESHOLD):
                         print("Gesto detectado: Súarez")
-                        time.sleep(1) 
-                        cv2.destroyAllWindows()
-                        cap.release()
-                        exit()
+               
 
 
         cv2.imshow('MediaPipe Hands', image)
