@@ -4,8 +4,7 @@ import yt_dlp
 def baixar_video(url, diretorio):
     try:
         ydl_opts = {
-            'outtmpl': f'{diretorio}/%(title)s.%(ext)s',  # Formato do nome do arquivo
-            'format': 'best'  # Formato de vídeo de melhor qualidade
+            'outtmpl': f'{diretorio}/%(title)s.%(ext)s', 'format': 'best'
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
